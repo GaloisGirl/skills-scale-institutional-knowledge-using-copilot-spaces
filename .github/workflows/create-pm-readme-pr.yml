@@ -3,12 +3,13 @@ name: Create OctoAcme PM README PR
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   create-pm-readme-pr:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -48,7 +49,7 @@ Acceptance checklist for this README
 - [ ] Stakeholders have reviewed (if needed)
 EOF
 
-      - name: Commit and create branch
+      - name: Commit changes and create branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -60,9 +61,8 @@ EOF
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "docs: add README for OctoAcme project management docs"
           branch: docs/add-pm-readme
-          title: "Add README for OctoAcme Project Management Docs"
+          title: Add README for OctoAcme Project Management Docs
           body: |
             Adds docs/README.md as a landing page for OctoAcme project management processes.
             Related to #2
